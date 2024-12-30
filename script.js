@@ -7,16 +7,17 @@ let masterPlay = document.getElementById('masterPlay');
 let myProgressBar = document.getElementById('myProgressBar');
 let gif = document.getElementById('gif');
 let songItems = document.getElementsByClassName('song');
+let masterSongName = document.getElementById('masterSongName');
 
 let songs = [
-    { songName: "Shiv-Kailash", filePath: "song/1.mp3", coverPath: "cover/0.png" },
-    { songName: "Tera-Fitoor", filePath: "song/2.mp3", coverPath: "cover/1.png" },
-    { songName: "Tere-Liye-ki-nai-Karaya", filePath: "song/3.mp3", coverPath: "cover/2.png" },
-    { songName: "Yeh-Tune-Kya-Kiya", filePath: "song/4.mp3", coverPath: "cover/3.jpg" },
-    { songName: "Dil-Meri-Na-Sune", filePath: "song/5.mp3", coverPath: "cover/4.jpg" },
-    { songName: "Bhulleya", filePath: "song/6.mp3", coverPath: "cover/5.jpg" },
-    { songName: "Sajni-Re", filePath: "song/7.mp3", coverPath: "cover/6.jpg" },
-    { songName: "Shayad", filePath: "song/3.mp3", coverPath: "cover/8.jpg" }
+    { songName: "Shiv-Kailash", filePath: "song/0.mp3", coverPath: "cover/0.png" },
+    { songName: "Tera-Fitoor", filePath: "song/1.mp3", coverPath: "cover/1.png" },
+    { songName: "Tere-Liye-ki-nai-Karaya", filePath: "song/2.mp3", coverPath: "cover/2.png" },
+    { songName: "Yeh-Tune-Kya-Kiya", filePath: "song/3.mp3", coverPath: "cover/3.jpg" },
+    { songName: "Dil-Meri-Na-Sune", filePath: "song/4.mp3", coverPath: "cover/4.jpg" },
+    { songName: "Bhulleya", filePath: "song/5.mp3", coverPath: "cover/5.jpg" },
+    { songName: "Sajni-Re", filePath: "song/6.mp3", coverPath: "cover/6.jpg" },
+    { songName: "Qaafirana", filePath: "song/7.mp3", coverPath: "cover/7.jpg" }
 ];
 
 // Convert songItems to an array and iterate
@@ -62,7 +63,7 @@ const makeAllPlays = () => {
     });
 };
 
-// Handle individual song play buttons
+// Handle individual song
 Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) => {
     element.addEventListener('click', (e) => {
         console.log(e.target);
@@ -73,6 +74,7 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) =>
 
         // Update audio element and play the selected song
         audioElement.src = `song/${songIndex}.mp3`;
+        masterSongName.innerText = songs[songIndex].songName;
         audioElement.currentTime = 0;
         audioElement.play();
 
@@ -82,3 +84,33 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) =>
         gif.style.opacity = 1;
     });
 });
+
+document.getElementById('next').addEventListener('click', () =>{
+    if(songIndex>=7){
+    songIndex = 0;
+    }
+    else{
+        songIndex += 1;
+    }
+    audioElement.src = `song/${songIndex}.mp3`;
+    masterSongName.innerText = songs[songIndex].songName;
+        audioElement.currentTime = 0;
+        audioElement.play();
+        masterPlay.classList.remove('fa-play-circle');
+        masterPlay.classList.add('fa-pause-circle');
+})
+
+document.getElementById('previous').addEventListener('click', () =>{
+    if(songIndex<=0){
+    songIndex = 0;
+    }
+    else{
+        songIndex -= 1;
+    }
+    audioElement.src = `song/${songIndex}.mp3`;
+    masterSongName.innerText = songs[songIndex].songName;
+        audioElement.currentTime = 0;
+        audioElement.play();
+        masterPlay.classList.remove('fa-play-circle');
+        masterPlay.classList.add('fa-pause-circle');
+})
